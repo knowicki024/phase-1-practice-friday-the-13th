@@ -8,7 +8,7 @@ const movieDetailImage = document.querySelector("img#detail-image")
 const movieDetailTitle = document.querySelector("h1#title")
 const movieDetailYear = document.querySelector("h3#year-released")
 const movieDetailDescription = document.querySelector("p#description")
-
+const bloodAmount = document.querySelector("#amount")
 const watchedButton = document.querySelector("button#watched")
 
 const bloodForm = document.querySelector("form#blood-form")
@@ -49,6 +49,9 @@ function movieDetails(movie) {
     movieDetailTitle.textContent = currentMovie.title 
     movieDetailYear.textContent = currentMovie.release_year
     movieDetailDescription.textContent = currentMovie.description 
+    watchedButton.textContent = currentMovie.watched? "Watched": "Unwatched"
+    bloodAmount.textContent = currentMovie.blood_amount;
+
 }
 
 function toggleWatchedButton() {
@@ -71,7 +74,7 @@ function addBloodAmountForm() {
 
         document.querySelector("span#amount").textContent = currentMovie.blood_amount;
 
-        event.target['blood-amount'].value = ""
+        event.target.reset()
 
     })
 }
