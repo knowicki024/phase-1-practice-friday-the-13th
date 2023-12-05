@@ -1,81 +1,78 @@
-
-let movieData
-let currentMovie
-
 const movieList = document.querySelector("#movie-list")
 
-const movieDetailImage = document.querySelector("img#detail-image")
-const movieDetailTitle = document.querySelector("h1#title")
-const movieDetailYear = document.querySelector("h3#year-released")
-const movieDetailDescription = document.querySelector("p#description")
-const bloodAmount = document.querySelector("#amount")
-const watchedButton = document.querySelector("button#watched")
+let currentMovie
 
-const bloodForm = document.querySelector("form#blood-form")
+const movieDetailTitle = document.querySelector("#title")
+const movieDetailYear = document.querySelector("#year-released")
+const movieDetailDescription = document.querySelector("#description")
+const movieDetailImage = document.querySelector("#detail-image")
+const movieDetailWatched = document.querySelector("#watched")
+const movieDetailBlood = document.querySelector("#amount")
 
+const bloodForm = document.querySelector("#blood-form")
 
-function getMovies(){
 fetch("http://localhost:3000/movies")
 .then(response => response.json())
-.then(json => {
-    movieData = json
-
-    movieData.forEach(movie => {
+.then(movieData => {
+    movieData.map(movie => {
         addMovieToPage(movie)
     })
-    movieDetails(movieData[0])
-
-    toggleWatchedButton()
-
-    addBloodAmountForm()
+    showMovieDetails(movieData[0])
 })
-}
 
 function addMovieToPage(movie) {
     const movieImage = document.createElement("img")
     movieImage.src = movie.image 
-    movieList.append(movieImage)
+    movieList.appendChild(movieImage)
+
 
     movieImage.addEventListener("click", () => {
-        movieDetails(movie)
+        showMovieDetails(movie)
     })
 }
 
-function movieDetails(movie) {
+function showMovieDetails(movie) {
 
-   currentMovie = movie
-    
-    movieDetailImage.src = currentMovie.image 
-    movieDetailTitle.textContent = currentMovie.title 
+    currentMovie = movie 
+
+    movieDetailTitle.textContent = currentMovie.title
     movieDetailYear.textContent = currentMovie.release_year
     movieDetailDescription.textContent = currentMovie.description 
-    watchedButton.textContent = currentMovie.watched? "Watched": "Unwatched"
-    bloodAmount.textContent = currentMovie.blood_amount;
+    movieDetailImage.src = currentMovie.image 
+    movieDetailWatched.textContent = currentMovie.watched? "Watched" : "Unwatched"
+    movieDetailBlood.textContent = currentMovie.blood_amount
 
-}
+    }
 
-function toggleWatchedButton() {
-        watchedButton.addEventListener("click", () => {
-        currentMovie.watched = !currentMovie.watched;
-        watchedButton.textContent = currentMovie.watched? "Watched": "Unwatched"
-    })
-}
+    function toggleWatchedButton () {
+        // pull movieDetailWatched element
+        movieDetailWatched.addEventListener("click", () => {
+            //add click event
+            currentMovie.watched = !currentMovie.watched
+            // current movie watched = not current movie watched
+            movieDetailWatched.textContent = currentMovie.watched? "Watched" : "Unwatched"
+        })
 
-function addBloodAmountForm() {
+    }
 
-    bloodForm.addEventListener("submit", (event) => {
-        event.preventDefault()
-        console.log(event)
-        const amountToAdd = event.target['blood-amount'].value //grabbing event value
-        console.log(event.target['blood-amount'].value)
-        
-        currentMovie.blood_amount += parseInt(amountToAdd)
-        console.log(currentMovie.blood_amount)
+    function addBloodForm() {
+        //pull the blood form from the DOM
+        // add submit event listener
+        bloodForm.addEventListener("submit", (event) => {
+            //event prevent default
+            event.preventDefault()
+            // console.log(event)
 
-        document.querySelector("span#amount").textContent = currentMovie.blood_amount;
+            //grab event value
+            const amountToAdd = event.target['blood-amount'].value
 
-        event.target.reset()
+            //increase amount of current movie with parseInt
+            currentMovie.blood_amount += parseInt(amountToAdd)
 
-    })
-}
-getMovies()
+            movieDetailBlood.textContent = currentMovie.blood_amount
+
+            event.target.reset()
+
+        })
+
+    }

@@ -7,7 +7,7 @@
       "description": "Camp counselors are stalked and murdered by an unknown assailant while trying to reopen a summer camp that was the site of a child's drowning.",
       "image": "./assets/f13-1.jpeg",
       "watched": false,
-      "blood_amount": 24
+      "blood_amount": 0
     },
     {
       "id": 2,
@@ -34,7 +34,7 @@
       "description": "After being mortally wounded and taken to the morgue, murderer Jason Voorhees spontaneously revives and embarks on a killing spree as he makes his way back to his home at Crystal Lake.",
       "image": "./assets/f13-finalchapter.jpeg",
       "watched": false,
-      "blood_amount": 19
+      "blood_amount": 0
     },
     {
       "id": 5,
@@ -88,7 +88,7 @@
       "description": "In the year 2455, Old Earth is now a contaminated planet abandoned for centuries -- a brown world of violent storms, toxic landmasses and poisonous seas. Yet humans have returned to the deadly place that they once fled, not to live, but to research the ancient, rusting artifacts of the long-gone civilizations. But it's not the harmful environment that could prove fatal to the intrepid, young explorers who have just landed on Old Earth. For them, it's Friday the 13th, and Jason lives!",
       "image": "./assets/f13-x.jpeg",
       "watched": false,
-      "blood_amount": 18
+      "blood_amount": 0
     },
     {
       "id": 11,
