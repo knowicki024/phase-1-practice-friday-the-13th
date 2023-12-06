@@ -14,65 +14,56 @@ const bloodForm = document.querySelector("#blood-form")
 fetch("http://localhost:3000/movies")
 .then(response => response.json())
 .then(movieData => {
-    movieData.map(movie => {
-        addMovieToPage(movie)
+    movieData.forEach(movie => {
+        addMovieImage(movie)
     })
-    showMovieDetails(movieData[0])
+    displayMovieDetails(movieData[0])
+
+    toggleWatchedButton()
+
+    addBloodToForm()
 })
 
-function addMovieToPage(movie) {
+function addMovieImage(movie) {
     const movieImage = document.createElement("img")
     movieImage.src = movie.image 
     movieList.appendChild(movieImage)
 
-
     movieImage.addEventListener("click", () => {
-        showMovieDetails(movie)
+        displayMovieDetails(movie)
     })
 }
 
-function showMovieDetails(movie) {
+function displayMovieDetails(movie) {
+    currentMovie = movie
 
-    currentMovie = movie 
-
-    movieDetailTitle.textContent = currentMovie.title
+    movieDetailTitle.textContent = currentMovie.title 
     movieDetailYear.textContent = currentMovie.release_year
     movieDetailDescription.textContent = currentMovie.description 
     movieDetailImage.src = currentMovie.image 
     movieDetailWatched.textContent = currentMovie.watched? "Watched" : "Unwatched"
-    movieDetailBlood.textContent = currentMovie.blood_amount
+    movieDetailBlood.textContent = currentMovie.blood_amount 
+}
 
-    }
+function toggleWatchedButton() {
+   // const movieDetailWatched = document.querySelector("#watched")
+    movieDetailWatched.addEventListener("click", () => {
+        currentMovie.watched = !currentMovie.watched 
+        movieDetailWatched.textContent = currentMovie.watched? "Watched" : "Unwatched"
 
-    function toggleWatchedButton () {
-        // pull movieDetailWatched element
-        movieDetailWatched.addEventListener("click", () => {
-            //add click event
-            currentMovie.watched = !currentMovie.watched
-            // current movie watched = not current movie watched
-            movieDetailWatched.textContent = currentMovie.watched? "Watched" : "Unwatched"
-        })
+    })
+}
 
-    }
+function addBloodToForm() {
+    bloodForm.addEventListener("submit", (event) => {
+        event.preventDefault()
 
-    function addBloodForm() {
-        //pull the blood form from the DOM
-        // add submit event listener
-        bloodForm.addEventListener("submit", (event) => {
-            //event prevent default
-            event.preventDefault()
-            // console.log(event)
+        const amountToAdd = event.target['blood-amount'].value
+        currentMovie.blood_amount += parseInt(amountToAdd)
 
-            //grab event value
-            const amountToAdd = event.target['blood-amount'].value
+        movieDetailBlood.textContent = currentMovie.blood_amount 
 
-            //increase amount of current movie with parseInt
-            currentMovie.blood_amount += parseInt(amountToAdd)
+        event.target.reset ()
 
-            movieDetailBlood.textContent = currentMovie.blood_amount
-
-            event.target.reset()
-
-        })
-
-    }
+    })
+}
